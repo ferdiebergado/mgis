@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Lubusin\Decomposer\DecomposerServiceProvider::class,
 
         /*
          * Application Service Providers...
