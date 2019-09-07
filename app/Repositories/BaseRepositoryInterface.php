@@ -5,11 +5,18 @@ namespace App\Repositories;
 interface BaseRepositoryInterface
 {
     /**
-    * Create a model instance
+     * Create a model instance
      * @param array $attributes
      * @return mixed
      */
     public function create(array $attributes);
+
+    /**
+     * Create a model instance or return if already exists
+     * @param array $attributes
+     * @return mixed
+     */
+    public function firstOrCreate(array $attributes);
 
     /**
      * Update a model instance
@@ -48,20 +55,6 @@ interface BaseRepositoryInterface
      * @return mixed
      */
     public function findBy(array $data);
-
-    /**
-     * Find one based on a different column
-     * @param array $data
-     * @return mixed
-     */
-    public function findOneBy(array $data);
-
-    /**
-     * Find one based on a different column or through exception
-     * @param array $data
-     * @return mixed
-     */
-    public function findOneByOrFail(array $data);
 
     /**
      * Delete one by Id

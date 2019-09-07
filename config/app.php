@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Lubusin\Decomposer\DecomposerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -176,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
 
     ],
 

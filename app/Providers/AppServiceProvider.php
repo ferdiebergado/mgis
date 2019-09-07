@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Region\RegionEloquentRepository;
+use App\Repositories\Region\RegionRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -27,9 +29,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Render ViewComponent Blade Directive
-         Blade::directive('render', function ($component) {
+        Blade::directive('render', function ($component) {
             return "<?php echo (app($component))->toHtml(); ?>";
-         });
+        });
         // Render ViewComponent
         //@render(\App\Http/ViewComponents\ViewComponent::class)
     }
