@@ -33,7 +33,11 @@ class AddForeignKeysToSchoolsTable extends Migration
         Schema::table('schools', function (Blueprint $table) {
             $table->dropForeign([
                 'region_id',
+            ]);
+            $table->dropForeign([
                 'division_id',
+            ]);
+            $table->dropForeign([
                 'district_id'
             ]);
         });

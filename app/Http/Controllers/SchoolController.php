@@ -4,17 +4,32 @@ namespace App\Http\Controllers;
 
 use App\School;
 use Illuminate\Http\Request;
+use App\Repositories\School\SchoolRepositoryInterface;
 
 class SchoolController extends Controller
 {
+    protected $school;
+
+    /**
+     * Class constructor.
+     */
+    public function __construct(SchoolRepositoryInterface $school)
+    {
+        $this->school = $school;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->expectsJson()) {
+            return $this->school->withTeachers()->get();
+        }
+
+        return view('school.main');
     }
 
     /**
@@ -46,7 +61,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        //
+        return $this->school->findOneOrFail($school->id);
     }
 
     /**
@@ -81,5 +96,14 @@ class SchoolController extends Controller
     public function destroy(School $school)
     {
         //
+    }
+
+    public function main(Request $request, School $school)
+    {
+        $sch = $this->school->findOneWithAll($school->id);
+        if ($request->expectsJson()) {
+            return $sch;
+        }
+        return view('school.main', compact('sch'));
     }
 }

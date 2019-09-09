@@ -31,6 +31,8 @@ class AddForeignKeysToDistrictsTable extends Migration
         Schema::table('districts', function (Blueprint $table) {
             $table->dropForeign([
                 'region_id',
+            ]);
+            $table->dropForeign([
                 'division_id'
             ]);
         });

@@ -89,6 +89,7 @@ class EloquentRepository extends BaseRepository
      */
     public function delete(int $id)
     {
-        return $this->model->delete();
+        $model = $this->findOneOrFail($id);
+        return $model->delete();
     }
 }

@@ -11,24 +11,9 @@ Regions
 
 <div class="row">
     <div class="col">
-        @render(\App\Http\ViewComponents\RegionsComponent::class)
+        {{-- @render(\App\Http\ViewComponents\RegionsComponent::class) --}}
+        <regions-data-table url="{{ route('regions.index') }}"></regions-data-table>
     </div>
 </div>
 
 @endsection
-
-@push('scripts')
-
-<script>
-    function confirmDelete(id) {
-
-        if (confirm('Are you sure?')) {
-            // Post the form
-            var frm = document.getElementById('frmDelete[' + id + ']');
-            frm.submit(); // Post the surrounding form
-        }
-    }
-
-</script>
-
-@endpush

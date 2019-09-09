@@ -18,7 +18,7 @@ class RegionsComponent implements Htmlable
     public function toHtml()
     {
         return View::make('region.widget')
-            ->with('regions', $this->repository->all(['id', 'name', 'sequence', 'area'], 'sequence', 'asc'))
+            ->with('regions', $this->repository->all())
             ->render();
     }
 }

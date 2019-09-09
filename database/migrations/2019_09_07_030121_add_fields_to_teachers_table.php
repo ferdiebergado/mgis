@@ -14,7 +14,7 @@ class AddFieldsToTeachersTable extends Migration
     public function up()
     {
         Schema::table('teachers', function (Blueprint $table) {
-            $table->boolean('isSchoolHead')->default(false);
+            $table->boolean('active')->default(true);
         });
     }
 
@@ -26,7 +26,7 @@ class AddFieldsToTeachersTable extends Migration
     public function down()
     {
         Schema::table('teachers', function (Blueprint $table) {
-            //
+            $table->dropColumn('isSchoolHead');
         });
     }
 }

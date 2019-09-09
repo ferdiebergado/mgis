@@ -23,12 +23,12 @@ class Division extends BaseModel
 
     public function teachers()
     {
-        return $this->hasMany(Teacher::class)->where('isSchoolHead', 0);
+        return $this->hasMany(Teacher::class);
     }
 
     public function schoolheads()
     {
-        return $this->hasMany(Teacher::class)->where('isSchoolHead', 1);
+        return $this->hasMany(SchoolHead::class);
     }
 
     public function enrolments()

@@ -14,12 +14,16 @@ class AddForeignKeysToEnrolmentsTable extends Migration
     public function up()
     {
         Schema::table('enrolments', function (Blueprint $table) {
+            $table->bigInteger('region_id')->unsigned();
+            $table->foreign('region_id')->references('id')->on('regions');
+            $table->bigInteger('division_id')->unsigned();
+            $table->foreign('division_id')->references('id')->on('divisions');
+            $table->bigInteger('district_id')->unsigned();
+            $table->foreign('district_id')->references('id')->on('districts');
             $table->bigInteger('school_id')->unsigned();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->bigInteger('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('teachers');
-            $table->bigInteger('schoolhead_id')->unsigned();
-            $table->foreign('schoolhead_id')->references('id')->on('teachers');
         });
     }
 
@@ -32,9 +36,19 @@ class AddForeignKeysToEnrolmentsTable extends Migration
     {
         Schema::table('enrolments', function (Blueprint $table) {
             $table->dropForeign([
+                'region_id',
+            ]);
+            $table->dropForeign([
+                'division_id',
+            ]);
+            $table->dropForeign([
+                'district_id'
+            ]);
+            $table->dropForeign([
                 'school_id',
+            ]);
+            $table->dropForeign([
                 'teacher_id',
-                'schoolhead_id'
             ]);
         });
     }

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\BaseModel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class District extends BaseModel
 {
@@ -16,14 +17,19 @@ class District extends BaseModel
         return $this->belongsTo(Division::class);
     }
 
+    public function schools()
+    {
+        return $this - HasMany(School::class);
+    }
+
     public function teachers()
     {
-        return $this->hasMany(Teacher::class)->where('isSchoolHead', 0);
+        return $this->hasMany(Teacher::class);
     }
 
     public function schoolheads()
     {
-        return $this->hasMany(Teacher::class)->where('isSchoolHead', 1);
+        return $this->hasMany(SchoolHead::class);
     }
 
     public function enrolments()

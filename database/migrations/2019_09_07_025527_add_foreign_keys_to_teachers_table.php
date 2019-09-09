@@ -20,6 +20,8 @@ class AddForeignKeysToTeachersTable extends Migration
             $table->foreign('division_id')->references('id')->on('divisions');
             $table->bigInteger('district_id')->unsigned();
             $table->foreign('district_id')->references('id')->on('districts');
+            $table->bigInteger('school_id')->unsigned();
+            $table->foreign('school_id')->references('id')->on('schools');
         });
     }
 
@@ -33,9 +35,14 @@ class AddForeignKeysToTeachersTable extends Migration
         Schema::table('teachers', function (Blueprint $table) {
             $table->dropForeign([
                 'region_id',
+            ]);
+            $table->dropForeign([
                 'division_id',
+            ]);
+            $table->dropForeign([
                 'district_id'
             ]);
+            $table->dropForeign(['school_id']);
         });
     }
 }

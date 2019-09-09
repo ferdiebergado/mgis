@@ -1,12 +1,13 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Division;
 use Faker\Generator as Faker;
 
-$factory->define(Division::class, function (Faker $faker) {
+$factory->define(App\Division::class, function (Faker $faker) {
     return [
-        //
+        'name' => $faker->name,
+        'active' => $faker->boolean,
+        'region_id' => $faker->numberBetween(1, 17),
     ];
 });

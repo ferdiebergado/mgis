@@ -1,1 +1,1 @@
-    <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.innerText='Saving...';this.form.submit();">Save</button>
+    <button type="submit" class="btn btn-primary" onclick="this.disabled=true; this.className+=' mdi mdi-refresh mdi-spin'; this.innerText='Saving...'; this.form.submit();"><span class="mdi mdi-content-save"></span> SAVE</button>

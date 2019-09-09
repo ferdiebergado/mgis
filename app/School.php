@@ -6,6 +6,15 @@ use App\BaseModel;
 
 class School extends BaseModel
 {
+    protected $fillable = [
+        'name',
+        'schid',
+        'type',
+        'district_id',
+        'division_id',
+        'region_id'
+    ];
+
     public function enrolments()
     {
         return $this->hasMany(Enrolment::class);
@@ -28,11 +37,11 @@ class School extends BaseModel
 
     public function teachers()
     {
-        return $this->hasMany(Teacher::class)->where('isSchoolHead', 0);
+        return $this->hasMany(Teacher::class);
     }
 
     public function schoolhead()
     {
-        return $this->hasOne(Teacher::class)->where('isSchoolHead', 1);
+        return $this->hasOne(SchoolHead::class);
     }
 }

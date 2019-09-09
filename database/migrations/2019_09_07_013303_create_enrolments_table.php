@@ -15,12 +15,9 @@ class CreateEnrolmentsTable extends Migration
     {
         Schema::create('enrolments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('g1')->default(0);
-            $table->integer('g2')->default(0);
-            $table->integer('g3')->default(0);
-            $table->integer('g4')->default(0);
-            $table->integer('g5')->default(0);
-            $table->integer('g6')->default(0);
+            $table->integer('grade');
+            $table->integer('male');
+            $table->integer('female');
             $table->string('remarks')->nullable();
             $table->year('sy');
             $table->timestamps();

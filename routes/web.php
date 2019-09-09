@@ -21,5 +21,9 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     // Route::get('decompose', '\Lubusin\Decomposer\Controllers\DecomposerController@index');
     Route::resource('regions', 'RegionController');
+    Route::resource('users', 'UserController');
+    Route::resource('schools', 'SchoolController');
+    Route::resource('teachers', 'TeacherController');
+    Route::get('school/{school}', 'SchoolController@main')->middleware('can:view,school');
     //MoreRoute
 });

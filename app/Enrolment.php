@@ -33,6 +33,6 @@ class Enrolment extends BaseModel
 
     public function schoolhead()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(SchoolHead::class);
     }
 }

@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Region;
-use App\Repositories\Region\RegionRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\StoreRegionRequest;
+use App\Repositories\Region\RegionRepositoryInterface;
 
 class RegionController extends Controller
 {
+    /**
+     * The Region Repository.
+     * @var \App\Repositories\Region\RegionRepositoryInterface
+     */
     protected $region;
+
+    /**
+     * The success message.
+     * @var string
+     */
     protected $success;
-    protected $rules;
 
     /**
      * Class constructor.
@@ -20,12 +29,7 @@ class RegionController extends Controller
     {
         $this->region = $region;
         $this->success = __('messages.success');
-        $this->rules = [
-            'name' => 'required|string|max:50',
-            'sequence' => 'required|integer|min:1',
-            'area' => 'required|string|size:1|in:L,V,M',
-            'active' => 'boolean'
-        ];
+        $this->authorizeResource(Region::class, 'region');
     }
 
     /**
@@ -35,10 +39,9 @@ class RegionController extends Controller
      */
     public function index(Request $request)
     {
-        $regions = $this->region->all();
-        // if ($request->ajax()) {
-        //     return $regions;
-        // }
+        if ($request->expectsJson()) {
+            return $this->region->allWithCount()->get()->toArray();
+        }
 
         return view('region.index');
     }
@@ -50,7 +53,7 @@ class RegionController extends Controller
      */
     public function create()
     {
-        return view('region.partial', ['region' => new \App\Region(), 'action' => 'store']);
+        return view('region.partial', ['region' => new Region, 'action' => 'store']);
     }
 
     /**
@@ -59,9 +62,11 @@ class RegionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRegionRequest $request)
     {
-        $this->validate($request, $this->rules);
+        $active = $request->has('active');
+
+        $request->merge(compact('active'));
 
         $this->region->firstOrCreate($request->only(['name', 'sequence', 'area', 'active']));
 
@@ -87,7 +92,8 @@ class RegionController extends Controller
      */
     public function edit(Region $region)
     {
-        return view('region.partial', ['region' => $this->region->findOneOrFail($region->id), 'action' => 'update']);
+        $region = $this->region->findOneOrFail($region->id);
+        return view('region.partial', ['region' => $region, 'action' => 'update']);
     }
 
     /**
@@ -97,15 +103,13 @@ class RegionController extends Controller
      * @param  \App\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Region $region)
+    public function update(StoreRegionRequest $request, Region $region)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:50',
-            'sequence' => 'required|integer|min:1',
-            'area' => 'required|string|size:1|in:L,V,M'
-        ]);
+        $active = $request->has('active');
 
-        $this->region->update($request->only(['name', 'sequence', 'area']), $region->id);
+        $request->merge(compact('active'));
+
+        $this->region->update($request->only(['name', 'sequence', 'area', 'active']), $region->id);
 
         return redirect()->route('regions.index')->withMessage($this->success);
     }
@@ -118,9 +122,6 @@ class RegionController extends Controller
      */
     public function destroy(Region $region)
     {
-        $region = $this->region->findOneOrFail($region->id);
-        $region->delete($region->id);
-
-        return redirect()->back()->withMessage($this->success);
+        return $this->region->delete($region->id);
     }
 }
